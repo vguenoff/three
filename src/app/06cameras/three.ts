@@ -6,13 +6,6 @@ const cursor = {
   y: 0,
 }
 
-window.addEventListener('mousemove', event => {
-  cursor.x = event.clientX
-  cursor.y = event.clientY
-
-  console.log(cursor.x, cursor.y)
-})
-
 export default function three(canvas: HTMLCanvasElement) {
   /**
    * Mesh
@@ -63,6 +56,17 @@ export default function three(canvas: HTMLCanvasElement) {
   // gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 })
   // gsap has a built-in requestAnimationFrame, so you don't need to update the animation by yourself, but still, if you want to see the cube moving, you need to keep doing the renders of your scene on each frame.
 
+  // Interactions
+  const mouseHandler = (e: MouseEvent) => {
+    cursor.x = e.clientX
+    cursor.y = e.clientY
+
+    console.log(cursor.x, cursor.y)
+  }
+
+  window.addEventListener('mousemove', mouseHandler)
+
+  // Rerender
   let frame: number
 
   function tick() {
@@ -77,6 +81,7 @@ export default function three(canvas: HTMLCanvasElement) {
   }
 
   function clear() {
+    window.removeEventListener('mousemove', mouseHandler)
     cancelAnimationFrame(frame)
   }
 

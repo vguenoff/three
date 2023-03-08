@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import three from './three'
 
 function Page() {
@@ -7,7 +7,6 @@ function Page() {
 
   useEffect(() => {
     const t = three(canvas.current as HTMLCanvasElement)
-
     t.tick()
 
     return () => t.clear()
