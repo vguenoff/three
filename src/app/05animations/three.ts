@@ -22,7 +22,10 @@ export default function three(canvas: HTMLCanvasElement) {
    * @param fieldOfView {number} 75
    * @param aspectRatio {number} window.innerWidth/window.innerHeight
    */
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight
+  )
   camera.position.z = 2
 
   /**

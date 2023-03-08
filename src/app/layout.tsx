@@ -10,9 +10,14 @@ const nav = [
   { href: '/03basic-scene', title: 'Basic Scene' },
   { href: '/04transform-object', title: 'Transform Object' },
   { href: '/05animations', title: 'Animations' },
+  { href: '/06cameras', title: 'Cameras' },
 ]
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <body>

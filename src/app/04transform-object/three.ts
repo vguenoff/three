@@ -11,14 +11,23 @@ export default function three(canvas: HTMLCanvasElement) {
   // group.rotation.x = 0.15 * Math.PI
   group.rotation.y = -0.05 * Math.PI
 
-  const cube1 = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0xff0000 }))
+  const cube1 = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  )
   cube1.position.x = -1.5
   group.add(cube1)
 
-  const cube2 = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x00ff00 }))
+  const cube2 = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshBasicMaterial({ color: 0x00ff00 })
+  )
   group.add(cube2)
 
-  const cube3 = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial({ color: 0x0000ff }))
+  const cube3 = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshBasicMaterial({ color: 0x0000ff })
+  )
   cube3.position.x = 1.5
   group.add(cube3)
 
@@ -32,7 +41,10 @@ export default function three(canvas: HTMLCanvasElement) {
    * @param fieldOfView {number} 75
    * @param aspectRatio {number} window.innerWidth/window.innerHeight
    */
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight)
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight
+  )
   camera.position.z = 3.9
   camera.position.x = 0.9
   camera.lookAt(group.position)

@@ -12,7 +12,7 @@ function Page() {
     return () => t.clear()
   }, [])
 
-  return <canvas ref={canvas}></canvas>
+  return <canvas ref={canvas} />
 }
 
 export default Page
