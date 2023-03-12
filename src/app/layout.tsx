@@ -11,6 +11,7 @@ const nav = [
   { href: '/04transform-object', title: 'Transform Object' },
   { href: '/05animations', title: 'Animations' },
   { href: '/06cameras', title: 'Cameras' },
+  { href: '/07resize-fullscreen', title: 'Resize and fullscreen' },
 ]
 
 export default function RootLayout({
