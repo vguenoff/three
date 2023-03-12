@@ -1,78 +1,63 @@
 import * as THREE from 'three'
-
-// Cursor
-const cursor = {
-  x: 0,
-  y: 0,
-}
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 export default function three(canvas: HTMLCanvasElement) {
   /**
-   * Mesh
-   * combination of a geometry (the shape) and material (how it looks)
+   * Controllers
    */
-  console.dir(canvas)
+  let frame: number
 
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshBasicMaterial({ color: 'red' })
-  const mesh = new THREE.Mesh(geometry, material) // red cube
-
-  /**
-   * Scene
-   */
-  const scene = new THREE.Scene()
-  scene.add(mesh)
-
-  /**
-   * Camera
-   * @param fieldOfView {number} 75
-   * @param aspectRatio {number} window.innerWidth/window.innerHeight
-   */
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight
-  )
-  camera.position.z = 2
-
-  /**
-   * Animate
-   * @param {number} elapsedTime
-   */
-  function animate(elapsedTime: number) {
-    mesh.rotation.y = elapsedTime
-    // mesh.position.x = Math.cos(elapsedTime)
-    // mesh.position.y = Math.sin(elapsedTime)
-
-    camera.lookAt(mesh.position)
+  const cursor = {
+    x: 0,
+    y: 0,
   }
 
-  /**
-   * createScene
-   * @param {HTMLCanvasElement} canvas
-   */
-  // Renderer
-  const renderer = new THREE.WebGLRenderer({ antialias: true, canvas })
-  const clock = new THREE.Clock()
-  // gsap.to(mesh.position, { duration: 1, delay: 1, x: 2 })
-  // gsap has a built-in requestAnimationFrame, so you don't need to update the animation by yourself, but still, if you want to see the cube moving, you need to keep doing the renders of your scene on each frame.
-
-  // Interactions
   const mouseHandler = (e: MouseEvent) => {
-    cursor.x = e.clientX
-    cursor.y = e.clientY
-
-    console.log(cursor.x, cursor.y)
+    cursor.x = e.clientX / canvas.width - 0.5
+    cursor.y = e.clientY / canvas.height - 0.5
   }
 
   window.addEventListener('mousemove', mouseHandler)
 
-  // Rerender
-  let frame: number
+  /**
+   * Views
+   */
+  const scene = new THREE.Scene()
+  const mesh = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1, 5, 5, 5),
+    new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  )
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    canvas.width / canvas.height,
+    0.1,
+    100
+  )
+  const renderer = new THREE.WebGLRenderer({ antialias: true, canvas })
+  const clock = new THREE.Clock()
+
+  camera.position.set(0, 0, 2)
+  scene.add(mesh)
+  scene.add(camera)
+  const controls = new OrbitControls(camera, canvas)
+  // controls.target.y = 2
+  controls.enableDamping = true
+
+  function animate(elapsedTime: number) {
+    // camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 2
+    // camera.position.y = cursor.y * 3
+    // camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 2
+    // camera.lookAt(mesh.position)
+    // mesh.rotation.y = elapsedTime
+    controls.update()
+  }
 
   function tick() {
-    // console.log('tick 6')
+    console.log('tick 6')
+
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.render(scene, camera)
+
     camera.aspect = window.innerWidth / window.innerHeight
     camera.updateProjectionMatrix()
 
