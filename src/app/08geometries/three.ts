@@ -35,7 +35,6 @@ export default function three(canvas: HTMLCanvasElement) {
   const mesh = new THREE.Mesh(geometry, material)
   scene.add(mesh)
 
-  // Camera
   const camera = new THREE.PerspectiveCamera(
     75,
     sizes.width / sizes.height,
@@ -59,9 +58,7 @@ export default function three(canvas: HTMLCanvasElement) {
   function tick() {
     console.log('tick 8')
     animate(clock.getElapsedTime())
-
     renderer.render(scene, camera)
-
     frame = requestAnimationFrame(tick)
   }
 
