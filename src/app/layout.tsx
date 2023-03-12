@@ -12,6 +12,7 @@ const nav = [
   { href: '/05animations', title: 'Animations' },
   { href: '/06cameras', title: 'Cameras' },
   { href: '/07resize-fullscreen', title: 'Resize and fullscreen' },
+  { href: '/08geometries', title: 'Geometries' },
 ]
 
 export default function RootLayout({
