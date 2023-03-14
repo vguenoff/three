@@ -33,8 +33,8 @@ export default function three(canvas: HTMLCanvasElement) {
   // const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2)
   // const geometry = new THREE.SphereGeometry(1, 32, 32)
   const geometry = new THREE.BufferGeometry()
-  // 450 values = 50 triangles (50 * 3 * 3)
-  const count = 450
+  // 450 values = 50 triangles (50 * 3 * 3) * 75
+  const count = 450 * 75
   const positionArray = new Float32Array(count).map(
     () => (Math.random() - 0.5) * 4
   )
