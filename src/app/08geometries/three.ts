@@ -36,7 +36,7 @@ export default function three(canvas: HTMLCanvasElement) {
   // 450 values = 50 triangles (50 * 3 * 3) * 75
   const count = 450 * 75
   const positionArray = new Float32Array(count).map(
-    () => (Math.random() - 0.5) * 4
+    () => (Math.random() - 0.5) * 2
   )
   const positionsAttribute = new THREE.BufferAttribute(positionArray, 3)
   geometry.setAttribute('position', positionsAttribute)
