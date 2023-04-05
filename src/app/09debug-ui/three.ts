@@ -1,5 +1,7 @@
 import * as T from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import * as lil from 'lil-gui'
+import gsap from 'gsap'
 
 const resize = (camera: T.PerspectiveCamera, renderer: T.Renderer) =>
   addEventListener('resize', () => {
@@ -14,7 +16,6 @@ export default function three(canvas: HTMLCanvasElement) {
   // Scene
   const scene = new T.Scene()
   const camera = new T.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 100)
-  const clock = new T.Clock()
   camera.position.z = 3
 
   // Renderer
@@ -22,26 +23,35 @@ export default function three(canvas: HTMLCanvasElement) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.setSize(innerWidth, innerHeight)
 
-  // Resize & Controls
+  // Controls & Resize
   new OrbitControls(camera, renderer.domElement)
   resize(camera, renderer)
 
   // View
-  const cube = new T.Mesh(
-    new T.BoxGeometry(1, 1, 1),
-    new T.MeshBasicMaterial({ color: 0xff0000 })
-  )
+  const p = { color: 0xff0000 }
+  const g = new T.BoxGeometry(1, 1, 1)
+  const m = new T.MeshBasicMaterial(p)
+  const cube = new T.Mesh(g, m)
   scene.add(cube)
 
-  // Animate
-  function animate(elapsedTime: number) {
-    cube.rotation.x = elapsedTime
-    cube.rotation.y = elapsedTime
-  }
+  // Debug UI
+  const gui = new lil.GUI()
+  gui.domElement.id = 'gui'
+  gui.addColor(p, 'color').onChange(() => m.color.set(p.color))
+  gui.add(cube.position, 'y').min(-3).max(3).step(0.01).name('elevation')
+  gui.add(cube, 'visible')
+  gui.add(cube.material, 'wireframe')
+  gui.add(
+    {
+      spin() {
+        gsap.to(cube.rotation, { y: cube.rotation.y + Math.PI, duration: 2 })
+      },
+    },
+    'spin'
+  )
 
   // Loop
   function loop() {
-    animate(clock.getElapsedTime())
     renderer.render(scene, camera)
     frame = requestAnimationFrame(loop)
 

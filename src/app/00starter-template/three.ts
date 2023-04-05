@@ -22,7 +22,7 @@ export default function three(canvas: HTMLCanvasElement) {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.setSize(innerWidth, innerHeight)
 
-  // Resize & Controls
+  // Controls & Resize
   new OrbitControls(camera, renderer.domElement)
   resize(camera, renderer)
 

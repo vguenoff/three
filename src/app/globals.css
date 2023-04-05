@@ -47,3 +47,8 @@ ul {
 li {
   list-style: none;
 }
+
+#gui {
+  position: absolute;
+  top: 110px;
+}
