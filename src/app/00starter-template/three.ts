@@ -1,75 +1,55 @@
-import * as THREE from 'three'
+import * as T from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
-export default function three(canvas: HTMLCanvasElement) {
-  /**
-   * Controllers
-   */
-  let frame: number
-  const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  }
-  const clock = new THREE.Clock()
-
-  function resizeHandler() {
-    sizes.width = window.innerWidth
-    sizes.height = window.innerHeight
-    const { width, height } = sizes
-
-    camera.aspect = width / height
+const resize = (camera: T.PerspectiveCamera, renderer: T.Renderer) =>
+  addEventListener('resize', () => {
+    camera.aspect = innerWidth / innerHeight
     camera.updateProjectionMatrix()
+    renderer.setSize(innerWidth, innerHeight)
+  })
 
-    renderer.setSize(width, height)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-  }
+export default function three(canvas: HTMLCanvasElement) {
+  let frame: number
 
-  window.addEventListener('resize', resizeHandler)
-
-  /**
-   * Views
-   */
-  const scene = new THREE.Scene()
-  const geometry = new THREE.BoxGeometry(1, 1, 1)
-  const material = new THREE.MeshBasicMaterial({ color: 0xff0000 })
-  const mesh = new THREE.Mesh(geometry, material)
-  scene.add(mesh)
-
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    sizes.width / sizes.height,
-    0.1,
-    100
-  )
+  // Scene
+  const scene = new T.Scene()
+  const camera = new T.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 100)
+  const clock = new T.Clock()
   camera.position.z = 3
-  scene.add(camera)
 
-  const controls = new OrbitControls(camera, canvas)
-  controls.enableDamping = true
-
-  const renderer = new THREE.WebGLRenderer({ antialias: true, canvas })
-  renderer.setSize(sizes.width, sizes.height)
+  // Renderer
+  const renderer = new T.WebGLRenderer({ antialias: true, canvas })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.setSize(innerWidth, innerHeight)
 
+  // Resize & Controls
+  new OrbitControls(camera, renderer.domElement)
+  resize(camera, renderer)
+
+  // View
+  const cube = new T.Mesh(
+    new T.BoxGeometry(1, 1, 1),
+    new T.MeshBasicMaterial({ color: 0xff0000 })
+  )
+  scene.add(cube)
+
+  // Animate
   function animate(elapsedTime: number) {
-    controls.update()
+    cube.rotation.x = elapsedTime
+    cube.rotation.y = elapsedTime
   }
 
-  function tick() {
-    console.log('tick 8')
+  // Loop
+  function loop() {
     animate(clock.getElapsedTime())
     renderer.render(scene, camera)
-    frame = requestAnimationFrame(tick)
-  }
+    frame = requestAnimationFrame(loop)
 
-  function clear() {
-    cancelAnimationFrame(frame)
+    console.log('loop 9')
   }
-
-  resizeHandler()
 
   return {
-    tick,
-    clear,
+    loop,
+    clear: () => cancelAnimationFrame(frame),
   }
 }

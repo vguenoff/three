@@ -7,7 +7,7 @@ function Page() {
 
   useEffect(() => {
     const t = three(canvas.current as HTMLCanvasElement)
-    t.tick()
+    t.loop()
 
     return () => t.clear()
   }, [])
