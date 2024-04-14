@@ -7,13 +7,13 @@ export const metadata = {
 }
 
 const nav = [
-  { href: '/03basic-scene', title: 'Basic Scene' },
-  { href: '/04transform-object', title: 'Transform Object' },
-  { href: '/05animations', title: 'Animations' },
-  { href: '/06cameras', title: 'Cameras' },
-  { href: '/07resize-fullscreen', title: 'Resize and fullscreen' },
-  { href: '/08geometries', title: 'Geometries' },
-  { href: '/09debug-ui', title: 'Debug UI' },
+  { href: '/03basic-scene', title: '03. Basic Scene' },
+  { href: '/04transform-object', title: '04. Transform Object' },
+  { href: '/05animations', title: '05. Animations' },
+  { href: '/06cameras', title: '06. Cameras' },
+  { href: '/07resize-fullscreen', title: '07. Resize and fullscreen' },
+  { href: '/08geometries', title: '08. Geometries' },
+  { href: '/09debug-ui', title: '09. Debug UI' },
 ]
 
 export default function RootLayout({
