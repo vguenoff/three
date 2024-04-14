@@ -3,7 +3,7 @@ import { BoxGeometry, MeshBasicMaterial, Mesh, Group, AxesHelper } from 'three'
 import useFrame from '@/lib/useFrame'
 
 export default function Three() {
-  const { canvas, frame } = useFrame(({ scene, camera }) => {
+  const { canvas } = useFrame(({ scene, camera }) => {
     const group = new Group()
     group.scale.y = 1.5
     // group.rotation.reorder('YXZ')
@@ -38,12 +38,5 @@ export default function Three() {
     camera.lookAt(group.position)
   })
 
-  return (
-    <>
-      <button onClick={() => cancelAnimationFrame(frame.current)}>
-        cancelAnimationFrame
-      </button>
-      <canvas ref={canvas} />
-    </>
-  )
+  return <canvas ref={canvas} />
 }

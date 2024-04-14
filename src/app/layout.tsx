@@ -9,8 +9,8 @@ export const metadata = {
 const nav = [
   { href: '/03-basic-scene', title: '03. Basic Scene' },
   { href: '/04-transform-object', title: '04. Transform Object' },
-  { href: '/04-transform-object-old', title: '04. Transform Object old' },
   { href: '/05-animations', title: '05. Animations' },
+  //
   { href: '/06-cameras', title: '06. Cameras' },
   { href: '/07-resize-fullscreen', title: '07. Resize and fullscreen' },
   { href: '/08-geometries', title: '08. Geometries' },
