@@ -1,5 +1,6 @@
 'use client'
 import { BoxGeometry, MeshBasicMaterial, Mesh } from 'three'
+
 import useFrame from '@/lib/useFrame'
 
 export default function Three() {
