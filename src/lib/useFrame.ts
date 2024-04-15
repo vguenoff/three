@@ -8,8 +8,17 @@ type RendererSceneAndCamera = {
   camera: PerspectiveCamera
 }
 
+/**
+ *
+ * @param callback possibly animate callback
+ * @returns
+ */
 export default function useFrame(
-  callback: (arg0: RendererSceneAndCamera) => (() => void) | void
+  callback: (arg0: RendererSceneAndCamera) => (() => void) | void,
+  camera: PerspectiveCamera = new PerspectiveCamera(
+    75, // fieldOfView
+    window.innerWidth / window.innerHeight // aspectRatio
+  )
 ) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const frame = useRef(0)
@@ -20,10 +29,6 @@ export default function useFrame(
       canvas: canvas.current as HTMLCanvasElement,
     })
     const scene = new Scene()
-    const camera = new PerspectiveCamera(
-      75, // fieldOfView
-      window.innerWidth / window.innerHeight // aspectRatio
-    )
 
     // animate if we have returned callback from the callback
     const animate = callback({ renderer, scene, camera })
