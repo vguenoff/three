@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import { BoxGeometry, MeshBasicMaterial, Mesh, PerspectiveCamera } from 'three'
+import { BoxGeometry, MeshBasicMaterial, Mesh } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import useFrame from '@/lib/useFrame'
@@ -23,7 +23,7 @@ export default function Three() {
     return () => {
       controls.update()
     }
-  }, new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100))
+  })
 
   const cursor = useRef({ x: 0, y: 0 })
 

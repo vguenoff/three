@@ -14,11 +14,7 @@ type RendererSceneAndCamera = {
  * @returns
  */
 export default function useFrame(
-  callback: (arg0: RendererSceneAndCamera) => (() => void) | void,
-  camera: PerspectiveCamera = new PerspectiveCamera(
-    75, // fieldOfView
-    window.innerWidth / window.innerHeight // aspectRatio
-  )
+  callback: (arg0: RendererSceneAndCamera) => (() => void) | void
 ) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const frame = useRef(0)
@@ -29,24 +25,59 @@ export default function useFrame(
       canvas: canvas.current as HTMLCanvasElement,
     })
     const scene = new Scene()
+    const camera = new PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      100
+    )
 
-    // animate if we have returned callback from the callback
+    // Custom animate if we have returned callback from the callback
     const animate = callback({ renderer, scene, camera })
 
+    // Loop
     ;(function tick() {
-      renderer.setSize(window.innerWidth, window.innerHeight)
-      renderer.render(scene, camera)
-
-      camera.aspect = window.innerWidth / window.innerHeight
       camera.updateProjectionMatrix()
-
-      animate?.()
-
+      renderer.render(scene, camera)
       frame.current = requestAnimationFrame(tick)
-      console.log(frame.current)
+      animate?.()
+      // console.log(frame.current)
     })()
 
-    return () => cancelAnimationFrame(frame.current)
+    // Event handlers
+    function resizeHandler() {
+      const width = window.innerWidth
+      const height = window.innerHeight
+
+      camera.aspect = width / height
+      camera.updateProjectionMatrix()
+
+      renderer.setSize(width, height)
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    }
+
+    function dblclickHandler() {
+      const fullscreenElement = document.fullscreenElement
+      const cc = canvas.current as HTMLCanvasElement
+
+      if (!fullscreenElement) {
+        if (cc.requestFullscreen) cc.requestFullscreen()
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen()
+      }
+    }
+
+    window.addEventListener('resize', resizeHandler)
+    window.addEventListener('dblclick', dblclickHandler)
+
+    resizeHandler()
+
+    return () => {
+      cancelAnimationFrame(frame.current)
+
+      window.removeEventListener('resize', resizeHandler)
+      window.removeEventListener('dblclick', dblclickHandler)
+    }
   }, [])
 
   return { canvas, frame }
