@@ -10,11 +10,11 @@ type RendererSceneAndCamera = {
 }
 
 /**
- * @param callback possibly animate callback
+ * @param view possibly animate callback
  * @returns
  */
 export default function useFrame(
-  callback: (arg0: RendererSceneAndCamera) => (() => void) | void
+  view: (arg0: RendererSceneAndCamera) => (() => void) | void
 ) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const frame = useRef(0)
@@ -35,8 +35,8 @@ export default function useFrame(
     const controls = new OrbitControls(camera, cc)
     controls.enableDamping = true
 
-    // Custom animate if we have returned callback from the callback
-    const animate = callback({ renderer, scene, camera })
+    // Custom animate if we have returned callback from the view
+    const animate = view({ renderer, scene, camera })
 
     // Loop
     ;(function tick() {
