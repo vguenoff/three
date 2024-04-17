@@ -6,8 +6,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import useFrame from '@/lib/useFrame'
 
 export default function Three() {
-  const { canvas, frame } = useFrame(({ scene, camera }) => {
-    const cc = canvas.current as HTMLCanvasElement
+  const { canvas } = useFrame(({ scene, camera }) => {
     const mesh = new Mesh(
       new BoxGeometry(1, 1, 1, 5, 5, 5),
       new MeshBasicMaterial({ color: 0xff0000 })
@@ -17,12 +16,7 @@ export default function Three() {
     scene.add(mesh)
     scene.add(camera)
 
-    const controls = new OrbitControls(camera, cc)
-    controls.enableDamping = true
-
-    return () => {
-      controls.update()
-    }
+    // return () => {}
   })
 
   const cursor = useRef({ x: 0, y: 0 })
@@ -40,12 +34,5 @@ export default function Three() {
     return () => window.removeEventListener('mousemove', mouseHandler)
   }, [])
 
-  return (
-    <>
-      <button onClick={() => cancelAnimationFrame(frame.current)}>
-        cancelAnimationFrame
-      </button>
-      <canvas ref={canvas} />
-    </>
-  )
+  return <canvas ref={canvas} />
 }

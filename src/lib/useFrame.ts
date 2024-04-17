@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 import { Scene, PerspectiveCamera, WebGLRenderer } from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 type RendererSceneAndCamera = {
   renderer: WebGLRenderer
@@ -20,10 +21,8 @@ export default function useFrame(
   const frame = useRef(0)
 
   useEffect(() => {
-    const renderer = new WebGLRenderer({
-      antialias: true,
-      canvas: canvas.current as HTMLCanvasElement,
-    })
+    const cc = canvas.current as HTMLCanvasElement
+    const renderer = new WebGLRenderer({ antialias: true, canvas: cc })
     const scene = new Scene()
     const camera = new PerspectiveCamera(
       75,
@@ -31,6 +30,8 @@ export default function useFrame(
       0.1,
       100
     )
+    const controls = new OrbitControls(camera, cc)
+    controls.enableDamping = true
 
     // Custom animate if we have returned callback from the callback
     const animate = callback({ renderer, scene, camera })
@@ -41,6 +42,7 @@ export default function useFrame(
       renderer.render(scene, camera)
       frame.current = requestAnimationFrame(tick)
       animate?.()
+      controls.update()
       // console.log(frame.current)
     })()
 
@@ -72,6 +74,7 @@ export default function useFrame(
 
     resizeHandler()
 
+    // Unmount
     return () => {
       cancelAnimationFrame(frame.current)
 

@@ -12,9 +12,9 @@ const nav = [
   { href: '/05-animations', title: '05. Animations' },
   { href: '/06-cameras', title: '06. Cameras' },
   { href: '/07-resize-fullscreen', title: '07. Resize and fullscreen' },
-  //
   { href: '/08-geometries', title: '08. Geometries' },
-  { href: '/09-debug-ui', title: '09. Debug UI' },
+  //
+  { href: '/09-debug-ui-old', title: '09. Debug UI old' },
 ]
 
 export default function RootLayout({
