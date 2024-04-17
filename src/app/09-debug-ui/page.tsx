@@ -1,18 +1,5 @@
-'use client'
-import { useEffect, useRef } from 'react'
-import three from './three'
+import Three from './Three'
 
-function Page() {
-  const canvas = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    const t = three(canvas.current as HTMLCanvasElement)
-    t.loop()
-
-    return () => t.clear()
-  }, [])
-
-  return <canvas ref={canvas} />
+export default function Page() {
+  return <Three />
 }
-
-export default Page

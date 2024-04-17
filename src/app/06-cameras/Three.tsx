@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useRef } from 'react'
 import { BoxGeometry, MeshBasicMaterial, Mesh } from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 import useFrame from '@/lib/useFrame'
 
@@ -13,6 +12,7 @@ export default function Three() {
     )
 
     camera.position.set(0, 0, 2)
+
     scene.add(mesh)
     scene.add(camera)
 

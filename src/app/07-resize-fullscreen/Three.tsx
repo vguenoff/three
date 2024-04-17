@@ -11,7 +11,6 @@ export default function Three() {
     )
 
     scene.add(mesh)
-    camera.position.z = 2
 
     const clock = new Clock()
 

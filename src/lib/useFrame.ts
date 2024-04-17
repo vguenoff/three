@@ -10,7 +10,6 @@ type RendererSceneAndCamera = {
 }
 
 /**
- *
  * @param callback possibly animate callback
  * @returns
  */
@@ -30,6 +29,9 @@ export default function useFrame(
       0.1,
       100
     )
+
+    camera.position.z = 2
+
     const controls = new OrbitControls(camera, cc)
     controls.enableDamping = true
 

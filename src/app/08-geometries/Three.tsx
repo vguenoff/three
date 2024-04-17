@@ -4,7 +4,7 @@ import { MeshBasicMaterial, Mesh, BufferGeometry, BufferAttribute } from 'three'
 import useFrame from '@/lib/useFrame'
 
 export default function Three() {
-  const { canvas } = useFrame(({ scene, camera }) => {
+  const { canvas } = useFrame(({ scene }) => {
     const positionsAttribute = new BufferAttribute(
       new Float32Array(100).map(() => (Math.random() - 0.5) * 2),
       3
@@ -19,9 +19,6 @@ export default function Three() {
     )
 
     scene.add(mesh)
-
-    camera.position.z = 2
-    scene.add(camera)
 
     // return () => {}
   })
