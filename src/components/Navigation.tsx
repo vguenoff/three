@@ -1,8 +1,10 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 
 const nav = [
+  '/00-vtk-loader',
+  // '/01-stl-loader',
   '/03-basic-scene',
   '/04-transform-object',
   '/05-animations',
@@ -14,6 +16,7 @@ const nav = [
 
 export default function Navigation() {
   const router = useRouter()
+  const pathname = usePathname()
 
   return (
     <select
@@ -21,6 +24,7 @@ export default function Navigation() {
       onChange={e => {
         router.push(e.target.value)
       }}
+      defaultValue={pathname}
     >
       {nav.map(href => (
         <option key={href}>{href}</option>

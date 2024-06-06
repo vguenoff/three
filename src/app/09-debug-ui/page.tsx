@@ -13,8 +13,6 @@ function Scene3d() {
     const cube = new Mesh(g, m)
     scene.add(cube)
 
-    scene.add(cube)
-
     // Debug UI
     const gui = new lil.GUI()
     gui.domElement.id = 'gui'
