@@ -13,7 +13,6 @@ function Scene3d() {
 
     camera.position.set(0, 0, 2)
 
-    console.log(scene)
     scene.add(mesh)
 
     // return () => {}
