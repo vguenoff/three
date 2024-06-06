@@ -10,11 +10,13 @@ type RendererSceneAndCamera = {
 }
 
 /**
- * @param view possibly animate callback
- * @returns
+ * @param getView The custom hook works by passing a callback
+ * witch gets the instances we're setting below of renderer, scene and/or camera
+ * and have optional animation callback itself (see animate)
+ * @returns { canvas, frame }
  */
 export default function useFrame(
-  view: (arg0: RendererSceneAndCamera) => (() => void) | void
+  getView: (arg0: RendererSceneAndCamera) => (() => void) | void
 ) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const frame = useRef(0)
@@ -35,10 +37,10 @@ export default function useFrame(
     const controls = new OrbitControls(camera, cc)
     controls.enableDamping = true
 
-    // Custom animate if we have returned callback from the view
-    const animate = view({ renderer, scene, camera })
+    // Optionally the elements we want to animate will be returned in this callback
+    const animate = getView({ renderer, scene, camera })
 
-    // Loop
+    // Rerender loop
     ;(function tick() {
       camera.updateProjectionMatrix()
       renderer.render(scene, camera)
@@ -76,7 +78,7 @@ export default function useFrame(
 
     resizeHandler()
 
-    // Unmount
+    // Clearing the animation loop and the event listeners
     return () => {
       cancelAnimationFrame(frame.current)
 
